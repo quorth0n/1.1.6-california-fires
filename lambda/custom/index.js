@@ -28,12 +28,22 @@ const getFireData = new Promise((resolve, reject) => {
 });
 
 const LaunchRequestHandler = {
+  /**
+   * Returns whether this method can handle the intent
+   * @param input Holds information about the input
+   * @return true if this request can be handled by this method
+   */
   canHandle(handlerInput) {
     return (
       handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
       handlerInput.requestEnvelope.request.intent.name === 'AllFiresIntent'
     );
   },
+  /** 
+   * Handles the intent request appropriately. 
+   * @param handlerInput Holds information about the input
+   * @return Response if the method is successful
+   */
   async handle(handlerInput) {
     let speechText = 'The following fires are ongoing: ';
 
@@ -51,12 +61,22 @@ const LaunchRequestHandler = {
 };
 
 const CountyFireIntentHandler = {
+  /**
+   * Returns whether this method can handle the intent
+   * @param input Holds information about the input
+   * @return true if this request can be handled by this method
+   */
   canHandle(handlerInput) {
     return (
       handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
       handlerInput.requestEnvelope.request.intent.name === 'CountyFireIntent'
     );
   },
+  /** 
+   * Handles the intent request appropriately. 
+   * @param handlerInput Holds information about the input
+   * @return Response if the method is successful
+   */
   async handle(handlerInput) {
     const data = await getFireData;
     const fire = _.find(data, fireData =>
@@ -78,12 +98,22 @@ const CountyFireIntentHandler = {
 };
 
 const IndexFireIntentHandler = {
+  /**
+   * Returns whether this method can handle the intent
+   * @param input Holds information about the input
+   * @return true if this request can be handled by this method
+   */
   canHandle(handlerInput) {
     return (
       handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
       handlerInput.requestEnvelope.request.intent.name === 'IndexFireIntent'
     );
   },
+  /** 
+   * Handles the intent request appropriately. 
+   * @param handlerInput Holds information about the input
+   * @return Response if the method is successful
+   */
   async handle(handlerInput) {
     const data = await getFireData;
     const fire = data[handlerInput.requestEnvelope.request.intent.slots.Index.value - 1];
@@ -105,6 +135,11 @@ const IndexFireIntentHandler = {
 };
 
 const LocalFiresIntentHandler = {
+  /**
+   * Returns whether this method can handle the intent
+   * @param input Holds information about the input
+   * @return true if this request can be handled by this method
+   */
   canHandle(handlerInput) {
     return (
       handlerInput.requestEnvelope.request.type === 'LaunchRequest' ||
@@ -112,6 +147,11 @@ const LocalFiresIntentHandler = {
         handlerInput.requestEnvelope.request.intent.name === 'LocalFiresIntent')
     );
   },
+  /** 
+   * Handles the intent request appropriately. 
+   * @param handlerInput Holds information about the input
+   * @return Response if the method is successful
+   */
   async handle(handlerInput) {
     let speechText = '';
     let needsPerms = false;
@@ -186,12 +226,22 @@ const LocalFiresIntentHandler = {
 };
 
 const HelpIntentHandler = {
+  /**
+   * Returns whether this method can handle the intent
+   * @param input Holds information about the input
+   * @return true if this request can be handled by this method
+   */
   canHandle(handlerInput) {
     return (
       handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
       handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent'
     );
   },
+  /** 
+   * Handles the intent request appropriately. 
+   * @param handlerInput Holds information about the input
+   * @return Response if the method is successful
+   */
   handle(handlerInput) {
     const speechText =
       'Try saying "get all fires" to get brief information about all fires,\n' +
@@ -208,6 +258,11 @@ const HelpIntentHandler = {
 };
 
 const CancelAndStopIntentHandler = {
+  /**
+   * Returns whether this method can handle the intent
+   * @param input Holds information about the input
+   * @return true if this request can be handled by this method
+   */
   canHandle(handlerInput) {
     return (
       handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
@@ -215,6 +270,11 @@ const CancelAndStopIntentHandler = {
         handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent')
     );
   },
+  /** 
+   * Handles the intent request appropriately. 
+   * @param handlerInput Holds information about the input
+   * @return Response if the method is successful
+   */
   handle(handlerInput) {
     const speechText = 'Got it';
 
@@ -226,9 +286,19 @@ const CancelAndStopIntentHandler = {
 };
 
 const SessionEndedRequestHandler = {
+  /**
+   * Returns whether this method can handle the intent
+   * @param input Holds information about the input
+   * @return true if this request can be handled by this method
+   */
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
   },
+  /** 
+   * Handles the intent request appropriately. 
+   * @param handlerInput Holds information about the input
+   * @return Response if the method is successful
+   */
   handle(handlerInput) {
     console.log(`Session ended with reason: ${handlerInput.requestEnvelope.request.reason}`);
 
@@ -237,9 +307,19 @@ const SessionEndedRequestHandler = {
 };
 
 const ErrorHandler = {
+  /**
+   * Returns whether this method can handle the intent
+   * @param input Holds information about the input
+   * @return true if this request can be handled by this method
+   */
   canHandle() {
     return true;
   },
+  /** 
+   * Handles the intent request appropriately. 
+   * @param handlerInput Holds information about the input
+   * @return Response if the method is successful
+   */
   handle(handlerInput, error) {
     console.log(`Error handled: ${error.message}`);
 
